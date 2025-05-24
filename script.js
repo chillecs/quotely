@@ -10,7 +10,7 @@ async function getRandomQuote() {
         quote.classList.add("loading");
         copyButton.style.display = 'none';  // Hide button while loading
 
-        const response = await fetch('https://chillecs.github.io/quotes-api/quotes.json');
+        const response = await fetch('quotes-api/quotes.json');
         const data = await response.json();
         const randomIndex = Math.floor(Math.random() * data.quotes.length);
         const selectedAuthor = data.quotes[randomIndex];
