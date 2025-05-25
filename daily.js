@@ -19,7 +19,7 @@ async function getDailyQuote() {
     try {
         showLoading();
 
-        const response = await fetch('quotes-api/quotes.json');
+        const response = await fetch('https://chillecs.github.io/quotes-api/quotes.json');
         const data = await response.json();
         
         // Flatten the quotes array
