@@ -19,14 +19,22 @@ async function getDailyQuote() {
     try {
         showLoading();
 
-        const response = await fetch('/quotes-api/quotes.json');
+        const response = await fetch('quotes-api/quotes.json');
         const data = await response.json();
+        
+        // Flatten the quotes array
+        const allQuotes = data.quotes.flatMap(author => 
+            author.quotes.map(quoteText => ({
+                text: quoteText,
+                author: author.author
+            }))
+        );
         
         // Use the current date to select a quote
         const today = new Date();
         const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-        const quoteIndex = dayOfYear % data.quotes.length;
-        const selectedQuote = data.quotes[quoteIndex];
+        const quoteIndex = dayOfYear % allQuotes.length;
+        const selectedQuote = allQuotes[quoteIndex];
         
         quote.textContent = `"${selectedQuote.text}"`;
         author.textContent = `— ${selectedQuote.author}`;
